@@ -1,4 +1,4 @@
-package pokedexcli
+package main
 
 import (
 	"testing"
