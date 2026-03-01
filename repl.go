@@ -57,6 +57,11 @@ func getCommands() map[string]cliCommand {
 		description: "Throw pokeball to pokemon",
 		callback:    commandCatch,
 	}
+	inspectCommand := cliCommand{
+		name:        "inspect",
+		description: "Inspect pokemon (Must have been captured previously)",
+		callback:    commandInspect,
+	}
 	return map[string]cliCommand{
 		"exit":    exitCmd,
 		"help":    helpCmd,
@@ -64,6 +69,7 @@ func getCommands() map[string]cliCommand {
 		"mapb":    mapBackCmd,
 		"explore": exploreCmd,
 		"catch":   catchCommand,
+		"inspect": inspectCommand,
 	}
 }
 
@@ -87,7 +93,7 @@ func startRepl(cfg *config) {
 		}
 		err := command.callback(cfg, args...)
 		if err != nil {
-			fmt.Println("error", err)
+			fmt.Println(err)
 			continue
 		}
 	}
