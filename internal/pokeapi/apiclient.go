@@ -15,12 +15,12 @@ type Client struct {
 	cache      pokecache.Cache
 }
 
-func NewClient(timeout time.Duration) Client {
+func NewClient(timeout, cacheInterval time.Duration) Client {
 	return Client{
 		httpClient: http.Client{
 			Timeout: timeout,
 		},
-		cache: pokecache.NewCache(5 * time.Second),
+		cache: pokecache.NewCache(cacheInterval * time.Second),
 	}
 }
 
@@ -50,7 +50,7 @@ func (c *Client) searchData(endpoint string) ([]byte, error) {
 	return data, nil
 }
 
-func (c *Client) GetResource(endpoint string) (Resource, error) {
+func (c *Client) GetUnnamedResource(endpoint string) (Resource, error) {
 	resource := Resource{}
 	data, err := c.searchData(endpoint)
 	if err != nil {

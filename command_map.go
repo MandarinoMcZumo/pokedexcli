@@ -6,12 +6,12 @@ import (
 	"github.com/mandarinomczumo/pokedexcli/internal/pokeapi"
 )
 
-func commandMap(c *config) error {
+func commandMap(c *config, args ...string) error {
 	endpoint := pokeapi.BASEURL + pokeapi.LOCATIONAREA
 	if c.LocationAreaNext != "" {
 		endpoint = c.LocationAreaNext
 	}
-	areas, err := c.pokeapiClient.GetResource(endpoint)
+	areas, err := c.pokeapiClient.GetUnnamedResource(endpoint)
 	if err != nil {
 		return fmt.Errorf("invalid resource: %w", err)
 	}
@@ -23,12 +23,12 @@ func commandMap(c *config) error {
 	return nil
 }
 
-func commandMapBack(c *config) error {
+func commandMapBack(c *config, args ...string) error {
 	if c.LocationAreaPrevious == "" {
 		fmt.Println("can't go back!")
 		return nil
 	}
-	areas, err := c.pokeapiClient.GetResource(c.LocationAreaPrevious)
+	areas, err := c.pokeapiClient.GetUnnamedResource(c.LocationAreaPrevious)
 	if err != nil {
 		return fmt.Errorf("invalid next endpoint: %w", err)
 	}
