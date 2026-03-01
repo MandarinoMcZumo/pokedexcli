@@ -31,11 +31,33 @@ type cliCommand struct {
 
 func getCommands() map[string]cliCommand {
 	exitCmd := cliCommand{name: "exit", description: "Exit the Pokedex", callback: commandExit}
-	helpCmd := cliCommand{name: "help", description: "Displays a help message", callback: commandHelp}
-	mapCmd := cliCommand{name: "map", description: "Displays 20 location areas in the Pokemon world", callback: commandMap}
-	mapBackCmd := cliCommand{name: "mapb", description: "Displays the next 20 location areas in the Pokemon world", callback: commandMapBack}
-	exploreCmd := cliCommand{name: "explore", description: "Explores a region", callback: commandExplore}
-	return map[string]cliCommand{"exit": exitCmd, "help": helpCmd, "map": mapCmd, "mapb": mapBackCmd, "explore": exploreCmd}
+	helpCmd := cliCommand{
+		name:        "help",
+		description: "Displays a help message",
+		callback:    commandHelp,
+	}
+	mapCmd := cliCommand{
+		name:        "map",
+		description: "Displays 20 location areas in the Pokemon world",
+		callback:    commandMap,
+	}
+	mapBackCmd := cliCommand{
+		name:        "mapb",
+		description: "Displays the next 20 location areas in the Pokemon world",
+		callback:    commandMapBack,
+	}
+	exploreCmd := cliCommand{
+		name:        "explore",
+		description: "Explores a region",
+		callback:    commandExplore,
+	}
+	return map[string]cliCommand{
+		"exit":    exitCmd,
+		"help":    helpCmd,
+		"map":     mapCmd,
+		"mapb":    mapBackCmd,
+		"explore": exploreCmd,
+	}
 }
 
 func startRepl(cfg *config) {
