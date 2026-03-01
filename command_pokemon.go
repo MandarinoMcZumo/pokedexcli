@@ -29,6 +29,18 @@ func commandCatch(c *config, args ...string) error {
 	return nil
 }
 
+func commandPokedex(c *config, args ...string) error {
+	if len(c.pokedex) == 0 {
+		fmt.Println("nothing here...")
+		return nil
+	}
+	fmt.Println("Your Pokedex:")
+	for key := range c.pokedex {
+		fmt.Printf("  - %s\n", key)
+	}
+	return nil
+}
+
 func commandInspect(c *config, args ...string) error {
 	pokemonName := args[0]
 	if len(args) == 0 {
@@ -50,7 +62,7 @@ Weight: %d
 	}
 	fmt.Println("Types:")
 	for _, tp := range pokemon.Types {
-		fmt.Printf("  -%s\n", tp.Type.Name)
+		fmt.Printf("  - %s\n", tp.Type.Name)
 	}
 	return nil
 }
