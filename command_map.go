@@ -6,41 +6,36 @@ import (
 	"github.com/mandarinomczumo/pokedexcli/internal/pokeapi"
 )
 
-const (
-	RESOURCE string = "location-area"
-	BASEURL  string = "https://pokeapi.co/api/v2/"
-)
-
 func commandMap(c *config) error {
-	endpoint := BASEURL + RESOURCE
-	if c.Next != "" {
-		endpoint = c.Next
+	endpoint := pokeapi.BASEURL + pokeapi.LOCATIONAREA
+	if c.LocationAreaNext != "" {
+		endpoint = c.LocationAreaNext
 	}
-	areas, err := pokeapi.GetResource(endpoint)
+	areas, err := c.pokeapiClient.GetResource(endpoint)
 	if err != nil {
 		return fmt.Errorf("invalid resource: %w", err)
 	}
 	for _, area := range areas.Results {
 		fmt.Println(area.Name)
 	}
-	c.Next = areas.Next
-	c.Previous = areas.Previous
+	c.LocationAreaNext = areas.Next
+	c.LocationAreaPrevious = areas.Previous
 	return nil
 }
 
 func commandMapBack(c *config) error {
-	if c.Previous == "" {
+	if c.LocationAreaPrevious == "" {
 		fmt.Println("can't go back!")
 		return nil
 	}
-	areas, err := pokeapi.GetResource(c.Previous)
+	areas, err := c.pokeapiClient.GetResource(c.LocationAreaPrevious)
 	if err != nil {
 		return fmt.Errorf("invalid next endpoint: %w", err)
 	}
 	for _, area := range areas.Results {
 		fmt.Println(area.Name)
 	}
-	c.Next = areas.Next
-	c.Previous = areas.Previous
+	c.LocationAreaNext = areas.Next
+	c.LocationAreaPrevious = areas.Previous
 	return nil
 }

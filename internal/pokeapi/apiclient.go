@@ -4,9 +4,22 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
 )
 
-func GetResource(endpoint string) (Resource, error) {
+type Client struct {
+	httpClient http.Client
+}
+
+func NewClient(timeout time.Duration) Client {
+	return Client{
+		httpClient: http.Client{
+			Timeout: timeout,
+		},
+	}
+}
+
+func (c *Client) GetResource(endpoint string) (Resource, error) {
 	resource := Resource{}
 
 	req, err := http.NewRequest("GET", endpoint, nil)
